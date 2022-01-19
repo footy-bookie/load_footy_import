@@ -103,7 +103,7 @@ def app():
     driver.quit()
     driver.close()
 
-    print('Sucess!')
+    print('Success!')
     return None
 
 
