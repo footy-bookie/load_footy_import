@@ -3,13 +3,15 @@ import time
 from datetime import datetime
 
 import pandas as pd
+from pandas import DataFrame
 from google.cloud import storage
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
 from secret_manager import access_secret_version
+from helpers import get_vm_custom_envs
 
-footy_username = os.getenv("FOOTY_USERNAME")
+footy_username = get_vm_custom_envs("FOOTY_USERNAME")
 footy_key = access_secret_version(os.getenv("PROJECT_NUMBER"))
 path = '/home/nicholasutikal/load_footy_import/auto_download_files'
 
@@ -28,7 +30,7 @@ def set_chrome_options() -> None:
     return chrome_options
 
 
-def clean_dir(path):
+def clean_dir(path: str):
     mydir = path
     filelist = [f for f in os.listdir(mydir) if f.endswith(".csv")]
     for f in filelist:
@@ -48,10 +50,10 @@ def read_storage():
     return df
 
 
-def write_data(df):
+def write_data(df: DataFrame):
     storage_client = storage.Client()
 
-    bucket = storage_client.get_bucket(os.getenv("SINK"))
+    bucket = storage_client.get_bucket(get_vm_custom_envs("SINK"))
 
     csv_name = "data-import-{}.csv".format(datetime.now().strftime("%Y-%m-%dT%H:%M:%S"))
     bucket.blob(csv_name).upload_from_string(df.to_csv(header=0, index=0), "text/csv")
@@ -60,7 +62,7 @@ def write_data(df):
 def app():
     clean_dir(path)
 
-    USERNAME = footy_username  # Your username
+    USERNAME = get_vm_custom_envs('FOOTY_KEY_NAME')  # Your username
     PASSWORD = footy_key  # Your password
 
     driver = webdriver.Chrome(chrome_options=set_chrome_options())
@@ -107,5 +109,5 @@ def app():
 
 if __name__ == "__main__":
     app()
-    df=read_storage()
+    df = read_storage()
     write_data(df)

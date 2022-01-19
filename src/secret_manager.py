@@ -1,9 +1,8 @@
 # run pip install google-cloud-secret-manager to install secretmanager
-import os
 from google.cloud import secretmanager
+from helpers import get_vm_custom_envs
 
-#//TODO: HOW TO ACCESS METADATA IN VM
-footy_key_name = os.getenv("FOOTY_KEY_NAME")
+footy_key_name = get_vm_custom_envs("FOOTY_KEY_NAME")
 
 def access_secret_version(project_id):
     """
