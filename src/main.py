@@ -62,7 +62,7 @@ def write_data(df: DataFrame):
 def app():
     clean_dir(path)
 
-    USERNAME = get_vm_custom_envs('FOOTY_KEY_NAME')  # Your username
+    USERNAME = footy_username  # Your username
     PASSWORD = footy_key  # Your password
 
     driver = webdriver.Chrome(chrome_options=set_chrome_options())
