@@ -12,7 +12,7 @@ from secret_manager import access_secret_version
 from helpers import get_vm_custom_envs
 
 footy_username = get_vm_custom_envs("FOOTY_USERNAME")
-footy_key = access_secret_version(get_vm_custom_envs("PROJECT_NUMBER"))
+footy_key = access_secret_version()
 path = '/home/nicholasutikal/load_footy_import/auto_download_files'
 
 

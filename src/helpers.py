@@ -7,6 +7,6 @@ def get_vm_custom_envs(meta_key: str):
         headers={'Metadata-Flavor': 'Google'},
     )
 
-    data = response.json()
+    data = response.text
 
     return data

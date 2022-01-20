@@ -2,9 +2,11 @@
 from google.cloud import secretmanager
 from helpers import get_vm_custom_envs
 
+project_id = get_vm_custom_envs("PROJECT_NUMBER")
 footy_key_name = get_vm_custom_envs("FOOTY_KEY_NAME")
 
-def access_secret_version(project_id):
+
+def access_secret_version():
     """
     Access the payload for the given secret version if one exists. The version
     can be a version number as a string (e.g. "5") or an alias (e.g. "latest").
