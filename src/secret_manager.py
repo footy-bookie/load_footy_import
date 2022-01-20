@@ -13,6 +13,8 @@ def access_secret_version(project_id):
     client = secretmanager.SecretManagerServiceClient()
 
     # Build the resource name of the secret version.
+    print(footy_key_name)
+    print(project_id)
     name = f"projects/{project_id}/secrets/{footy_key_name}/versions/latest"
 
     # Access the secret version.
