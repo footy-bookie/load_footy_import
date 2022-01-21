@@ -109,5 +109,5 @@ def app():
 
 if __name__ == "__main__":
     app()
-    df = read_storage()
-    write_data(df)
+    # df = read_storage()
+    # write_data(df)
