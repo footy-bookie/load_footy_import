@@ -103,8 +103,8 @@ def app():
 
     time.sleep(5)
 
-    driver.quit()
     driver.close()
+    driver.quit()
 
     print('Success!')
     return None
