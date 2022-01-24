@@ -13,7 +13,9 @@ from helpers import get_vm_custom_envs
 
 footy_username = get_vm_custom_envs("FOOTY_USERNAME")
 footy_key = access_secret_version()
-path = '/home/nicholasutikal/load_footy_import/auto_download_files'
+
+PATH = os.path.dirname(os.path.abspath(__file__))
+path_auto = os.path.join(PATH, "auto_download_files")
 
 
 def set_chrome_options() -> None:
@@ -24,8 +26,9 @@ def set_chrome_options() -> None:
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
-    # chrome_prefs = {"download.default_directory": r"{}".format(path)}
-    chrome_prefs = {}
+    # //TODO: FIX DOWNLOAD PATH
+    chrome_prefs = {"download.default_directory": r"{}".format(path_auto)}
+    # chrome_prefs = {}
     chrome_options.experimental_options["prefs"] = chrome_prefs
     chrome_prefs["profile.default_content_settings"] = {"images": 2}
     return chrome_options
@@ -61,7 +64,7 @@ def write_data(df: DataFrame):
 
 
 def app():
-    clean_dir(path)
+    clean_dir(path_auto)
 
     USERNAME = footy_username  # Your username
     PASSWORD = footy_key  # Your password
