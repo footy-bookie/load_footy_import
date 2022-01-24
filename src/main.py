@@ -7,15 +7,14 @@ from pandas import DataFrame
 from google.cloud import storage
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-
+from pathlib import Path
 from secret_manager import access_secret_version
 from helpers import get_vm_custom_envs
 
 footy_username = get_vm_custom_envs("FOOTY_USERNAME")
 footy_key = access_secret_version()
 
-PATH = os.path.dirname(os.path.abspath(__file__))
-path_auto = os.path.join(PATH, "auto_download_files")
+path = Path("/home/nicholasutikal/load_footy_import/auto_download_files")
 
 
 def set_chrome_options() -> None:
@@ -27,7 +26,7 @@ def set_chrome_options() -> None:
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
     # //TODO: FIX DOWNLOAD PATH
-    chrome_prefs = {"download.default_directory": r"{}".format(path_auto)}
+    chrome_prefs = {"download.default_directory": r"{}".format(str(path))}
     # chrome_prefs = {}
     chrome_options.experimental_options["prefs"] = chrome_prefs
     chrome_prefs["profile.default_content_settings"] = {"images": 2}
@@ -64,7 +63,7 @@ def write_data(df: DataFrame):
 
 
 def app():
-    clean_dir(path_auto)
+    clean_dir(str(path))
 
     USERNAME = footy_username  # Your username
     PASSWORD = footy_key  # Your password
