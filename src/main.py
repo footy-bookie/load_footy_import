@@ -25,7 +25,6 @@ def set_chrome_options() -> None:
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
-    # //TODO: FIX DOWNLOAD PATH
     chrome_prefs = {"download.default_directory": r"{}".format(str(path))}
     # chrome_prefs = {}
     chrome_options.experimental_options["prefs"] = chrome_prefs
@@ -40,10 +39,13 @@ def clean_dir(path: str):
         os.remove(os.path.join(mydir, f))
 
 
-def read_storage():
+def read_storage(path: str):
+    mydir = path
+    filelist = [f for f in os.listdir(mydir) if f.endswith(".csv")]
+
     my_dataframe_list = []
 
-    for file in list(os.listdir('.')):
+    for file in filelist:
         my_dataframe_list.append(pd.read_csv(file))
 
     df = pd.concat(my_dataframe_list)
@@ -60,6 +62,7 @@ def write_data(df: DataFrame):
 
     csv_name = "data-import-{}.csv".format(datetime.now().strftime("%Y-%m-%dT%H:%M:%S"))
     bucket.blob(csv_name).upload_from_string(df.to_csv(header=0, index=0), "text/csv")
+    print("Successfully imported, cleaned and exported match stats to {}".format(bucket))
 
 
 def app():
@@ -112,5 +115,5 @@ def app():
 
 if __name__ == "__main__":
     app()
-    # df = read_storage()
-    # write_data(df)
+    df = read_storage(str(path))
+    write_data(df)
