@@ -39,7 +39,7 @@ def clean_dir(path: str) -> None:
         os.remove(os.path.join(mydir, f))
 
 
-def read_storage(path: str) -> DataFrame:
+def read_storage(path: str) -> tuple:
     # read, clean and return teams files
     mydir = path
     filelist = [f for f in os.listdir(mydir) if f.endswith(".csv") and "teams" in f]
@@ -55,12 +55,9 @@ def read_storage(path: str) -> DataFrame:
 
     # read and return match files
     filelist_match = [f for f in os.listdir(mydir) if f.endswith(".csv") and "matches" in f]
-    my_dataframe_list_match = []
 
     for f in filelist_match:
-        my_dataframe_list_match.append(pd.read_csv(os.path.join(mydir, f)))
-
-    df_match = pd.concat(my_dataframe_list)
+        df_match = pd.read_csv(os.path.join(mydir, f))
 
     return df, df_match
 
