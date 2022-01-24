@@ -45,8 +45,8 @@ def read_storage(path: str):
 
     my_dataframe_list = []
 
-    for file in filelist:
-        my_dataframe_list.append(pd.read_csv(file))
+    for f in filelist:
+        my_dataframe_list.append(pd.read_csv(os.path.join(mydir, f)))
 
     df = pd.concat(my_dataframe_list)
     df = df.dropna(how='all')
@@ -114,6 +114,6 @@ def app():
 
 
 if __name__ == "__main__":
-    app()
+    # app()
     df = read_storage(str(path))
     write_data(df)
