@@ -37,7 +37,7 @@ def clean_dir(path: str):
     mydir = path
     filelist = [f for f in os.listdir(mydir) if f.endswith(".csv")]
     for f in filelist:
-        os.remove(f)
+        os.remove(os.path.join(mydir, f))
 
 
 def read_storage():
