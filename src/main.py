@@ -32,16 +32,17 @@ def set_chrome_options() -> None:
     return chrome_options
 
 
-def clean_dir(path: str):
+def clean_dir(path: str) -> None:
     mydir = path
     filelist = [f for f in os.listdir(mydir) if f.endswith(".csv")]
     for f in filelist:
         os.remove(os.path.join(mydir, f))
 
 
-def read_storage(path: str):
+def read_storage(path: str) -> DataFrame:
+    # read, clean and return teams files
     mydir = path
-    filelist = [f for f in os.listdir(mydir) if f.endswith(".csv")]
+    filelist = [f for f in os.listdir(mydir) if f.endswith(".csv") and "teams" in f]
 
     my_dataframe_list = []
 
@@ -52,20 +53,32 @@ def read_storage(path: str):
     df = df.dropna(how='all')
     df.columns = [x.replace(' ', '_').replace('-', '_').replace('(', '_').replace(')', '_') for x in df.columns]
 
-    return df
+    # read and return match files
+    filelist_match = [f for f in os.listdir(mydir) if f.endswith(".csv") and "matches" in f]
+    my_dataframe_list_match = []
+
+    for f in filelist_match:
+        my_dataframe_list_match.append(pd.read_csv(os.path.join(mydir, f)))
+
+    df_match = pd.concat(my_dataframe_list)
+
+    return df, df_match
 
 
-def write_data(df: DataFrame):
+def write_data(df: DataFrame, df_match: DataFrame) -> None:
     storage_client = storage.Client()
 
     bucket = storage_client.get_bucket(get_vm_custom_envs("SINK"))
 
     csv_name = "data-import-{}.csv".format(datetime.now().strftime("%Y-%m-%dT%H:%M:%S"))
     bucket.blob(csv_name).upload_from_string(df.to_csv(header=0, index=0), "text/csv")
-    print("Successfully imported, cleaned and exported match stats to {}".format(bucket))
+
+    csv_name_match = "data-import-match-{}.csv".format(datetime.now().strftime("%Y-%m-%dT%H:%M:%S"))
+    bucket.blob(csv_name_match).upload_from_string(df_match.to_csv(header=0, index=0), "text/csv")
+    print("Successfully imported, cleaned and exported match stats to {}".format(str(bucket)))
 
 
-def app():
+def app() -> None:
     clean_dir(str(path))
 
     USERNAME = footy_username  # Your username
@@ -87,22 +100,22 @@ def app():
     time.sleep(5)  # Let the user actually see something!
 
     # germany teams
-    driver.get('https://footystats.org/c-dl.php?type=teams&comp=6192')  # Sample download 1
+    driver.get('https://footystats.org/c-dl.php?type=teams&comp=6192')
     time.sleep(3)
     # germany matches
-    driver.get('https://footystats.org/c-dl.php?type=matches&comp=6192')  # Sample download 2
-    # england matches
+    driver.get('https://footystats.org/c-dl.php?type=matches&comp=6192')
+    # england teams
     time.sleep(3)
-    driver.get('https://footystats.org/c-dl.php?type=matches&comp=6135')  # Sample download 2
-    # spain matches
+    driver.get('https://footystats.org/c-dl.php?type=teams&comp=6135')
+    # spain teams
     time.sleep(3)
-    driver.get('https://footystats.org/c-dl.php?type=matches&comp=6790')  # Sample download 2
-    # italy matches
+    driver.get('https://footystats.org/c-dl.php?type=teams&comp=6790')
+    # italy teams
     time.sleep(3)
-    driver.get('https://footystats.org/c-dl.php?type=matches&comp=6198')  # Sample download 2
-    # france matches
+    driver.get('https://footystats.org/c-dl.php?type=teams&comp=6198')
+    # france teams
     time.sleep(3)
-    driver.get('https://footystats.org/c-dl.php?type=matches&comp=6019')  # Sample download 2
+    driver.get('https://footystats.org/c-dl.php?type=teams&comp=6019')
 
     time.sleep(5)
 
@@ -114,6 +127,6 @@ def app():
 
 
 if __name__ == "__main__":
-    # app()
-    df = read_storage(str(path))
-    write_data(df)
+    app()
+    df, df_match = read_storage(str(path))
+    write_data(df, df_match)
