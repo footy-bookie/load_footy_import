@@ -75,7 +75,7 @@ def write_data(df: DataFrame, df_match: DataFrame) -> None:
     print("Successfully imported, cleaned and exported match stats to {}".format(str(bucket)))
 
 
-def app() -> None:
+def main() -> None:
     clean_dir(str(path))
 
     USERNAME = footy_username  # Your username
@@ -124,6 +124,6 @@ def app() -> None:
 
 
 if __name__ == "__main__":
-    app()
+    main()
     df, df_match = read_storage(str(path))
     write_data(df, df_match)
