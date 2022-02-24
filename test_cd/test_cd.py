@@ -15,6 +15,7 @@ def set_chrome_options() -> None:
     options.add_argument('--no-sandbox')
     options.add_argument('--headless')
     options.add_argument('--disable-dev-shm-usage')
+    
 
     chrome_prefs={}
     options.experimental_options["prefs"] = chrome_prefs
