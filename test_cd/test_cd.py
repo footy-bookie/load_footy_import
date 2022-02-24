@@ -1,10 +1,12 @@
 import time
+
 from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 
-USERNAME = 'nichohelmut' # Your username
-PASSWORD = '80086' # Your password
+USERNAME = 'nichohelmut'  # Your username
+PASSWORD = '80086'  # Your password
+
+
 # CHROMEDRIVER_PATH = '/usr/local/bin/chromedriver' # Insert the path of chromedriver (to be downloaded from "https://sites.google.com/a/chromium.org/chromedriver/downloads")
 
 def set_chrome_options() -> None:
@@ -17,19 +19,21 @@ def set_chrome_options() -> None:
     options.add_argument('--disable-dev-shm-usage')
     
 
-    chrome_prefs={}
+    user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36'
+    options.add_argument(f'user-agent={user_agent}')
+
+    chrome_prefs = {}
     options.experimental_options["prefs"] = chrome_prefs
     chrome_prefs["profile.default_content_settings"] = {"images": 2}
     return options
 
+
 try:
-    driver = webdriver.Chrome(chrome_options=set_chrome_options())  
+    driver = webdriver.Chrome(chrome_options=set_chrome_options())
 
     driver.get('https://footystats.org/login');
 
-
-    time.sleep(5) # Let the user actually see something!
-
+    time.sleep(5)  # Let the user actually see something!
 
     search_box = driver.find_element_by_id('username')
     search_box.send_keys(USERNAME)
@@ -37,12 +41,9 @@ try:
 
     search_box.send_keys(PASSWORD)
 
-
-
     driver.find_element_by_id('register_submit').submit()
 
-    time.sleep(5) # Let the user actually see something!
-
+    time.sleep(5)  # Let the user actually see something!
 
     # germany teams
     driver.get('https://footystats.org/c-dl.php?type=teams&comp=6192');  # Sample download 1
@@ -66,4 +67,4 @@ try:
     print("ok")
     driver.quit()
 except Exception as ex:
-  print(ex)
+    print(ex)
