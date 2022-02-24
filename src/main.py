@@ -86,13 +86,13 @@ def main() -> None:
 
     time.sleep(5)
     print(driver)
-    search_box = driver.find_element_by_name("username")
+    search_box = driver.find_element_by_id("username")
     search_box.send_keys(USERNAME)
 
-    search_box = driver.find_element_by_name("password")
+    search_box = driver.find_element_by_id("password")
     search_box.send_keys(PASSWORD)
 
-    driver.find_element_by_name("register_submit").click()
+    driver.find_element_by_id("register_submit").click()
 
     time.sleep(5)  # Let the user actually see something!
 
