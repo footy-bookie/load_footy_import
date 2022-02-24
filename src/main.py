@@ -85,14 +85,14 @@ def main() -> None:
     driver.get('https://footystats.org/login')
 
     time.sleep(5)
-
-    search_box = driver.find_element("username")
+    print(driver)
+    search_box = driver.find_element_by_name("username")
     search_box.send_keys(USERNAME)
 
-    search_box = driver.find_element("password")
+    search_box = driver.find_element_by_name("password")
     search_box.send_keys(PASSWORD)
 
-    driver.find_element("register_submit").click()
+    driver.find_element_by_name("register_submit").click()
 
     time.sleep(5)  # Let the user actually see something!
 
