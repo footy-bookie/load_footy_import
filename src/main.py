@@ -109,7 +109,7 @@ def main() -> None:
     driver.get('https://footystats.org/c-dl.php?type=teams&comp=6135')
     # spain teams
     time.sleep(3)
-    driver.get('https://footystats.org/c-dl.php?type=teams&comp=6790')
+    driver.get('https://footystats.org/c-dl.php?type=teams&comp=6211')
     # italy teams
     time.sleep(3)
     driver.get('https://footystats.org/c-dl.php?type=teams&comp=6198')
