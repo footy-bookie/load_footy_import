@@ -95,12 +95,13 @@ def main() -> None:
     search_box.send_keys(PASSWORD)
 
     driver.find_element_by_id("register_submit").click()
-    driver.get_screenshot_as_file("screenshot.png")
+    
     time.sleep(5)  # Let the user actually see something!
 
     # germany teams
     driver.get('https://footystats.org/c-dl.php?type=teams&comp=6192')
     time.sleep(3)
+    driver.get_screenshot_as_file("screenshot.png")
     # germany matches
     driver.get('https://footystats.org/c-dl.php?type=matches&comp=6192')
     # england teams
