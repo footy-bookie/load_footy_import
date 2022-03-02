@@ -95,7 +95,7 @@ def main() -> None:
     search_box.send_keys(PASSWORD)
 
     driver.find_element_by_id("register_submit").click()
-
+    driver.get_screenshot_as_file("screenshot.png")
     time.sleep(5)  # Let the user actually see something!
 
     # germany teams
