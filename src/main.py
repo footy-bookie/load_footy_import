@@ -85,6 +85,7 @@ def main() -> None:
 
     driver = webdriver.Chrome(chrome_options=set_chrome_options())
     driver.get('https://footystats.org/login')
+    driver.get_screenshot_as_file("screenshot.png")
 
     time.sleep(5)
     print(driver)
