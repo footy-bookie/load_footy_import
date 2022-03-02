@@ -1,4 +1,4 @@
-selenium==4.1.0
+selenium==3.141.0
 gunicorn==20.1.0
 chromedriver-binary==98.0.4758.48.0
 google-cloud-secret-manager==2.8.0
