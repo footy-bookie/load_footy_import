@@ -123,6 +123,7 @@ def main() -> None:
     driver.quit()
 
     print('Success!')
+
     return None
 
 
