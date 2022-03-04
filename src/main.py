@@ -121,7 +121,6 @@ def main() -> None:
 
     driver.close()
     driver.quit()
-
     print('Success!')
 
     return None
