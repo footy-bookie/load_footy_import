@@ -70,10 +70,10 @@ def write_data(df: DataFrame, df_match: DataFrame) -> None:
     bucket = storage_client.get_bucket(get_vm_custom_envs("SINK"))
 
     csv_name = "data-import-teams.csv"
-    bucket.blob(csv_name).upload_from_string(df.to_csv(header=1, index=0), "text/csv")
+    bucket.blob(csv_name).upload_from_string(df.to_csv(header=0, index=0), "text/csv")
 
     csv_name_match = "data-import-matches.csv"
-    bucket.blob(csv_name_match).upload_from_string(df_match.to_csv(header=1, index=0), "text/csv")
+    bucket.blob(csv_name_match).upload_from_string(df_match.to_csv(header=0, index=0), "text/csv")
     print("Successfully imported, cleaned and exported match stats to {}".format(str(bucket)))
 
 
