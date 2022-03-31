@@ -1,7 +1,10 @@
 # load_footy_import
 
+## Architecture
+![](readme_data/infrastructure.png)
 
-In case vm has to be restored or is replaced by tf:
+
+## In case vm has to be restored or is replaced by tf:
 
 sudo apt install build-essential make unzip libssl-dev libghc-zlib-dev libcurl4-gnutls-dev libexpat1-dev gettext dh-autoreconf libz-dev
 
