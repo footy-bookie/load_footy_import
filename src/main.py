@@ -1,18 +1,14 @@
 import os
 import time
-from datetime import datetime
+from pathlib import Path
 
 import pandas as pd
-from pandas import DataFrame
 from google.cloud import storage
+from pandas import DataFrame
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from pathlib import Path
-from secret_manager import access_secret_version
-from helpers import get_vm_custom_envs
 
-footy_username = get_vm_custom_envs("FOOTY_USERNAME")
-footy_key = access_secret_version()
+footy_username = os.getenv("FOOTY_USERNAME")
 
 path = Path("/home/nicholasutikal/load_footy_import/auto_download_files")
 
@@ -32,13 +28,6 @@ def set_chrome_options() -> None:
     chrome_options.experimental_options["prefs"] = chrome_prefs
     chrome_prefs["profile.default_content_settings"] = {"images": 2}
     return chrome_options
-
-
-def clean_dir(path: str) -> None:
-    mydir = path
-    filelist = [f for f in os.listdir(mydir) if f.endswith(".csv")]
-    for f in filelist:
-        os.remove(os.path.join(mydir, f))
 
 
 def read_storage(path: str) -> tuple:
@@ -67,7 +56,7 @@ def read_storage(path: str) -> tuple:
 def write_data(df: DataFrame, df_match: DataFrame) -> None:
     storage_client = storage.Client()
 
-    bucket = storage_client.get_bucket(get_vm_custom_envs("SINK"))
+    bucket = storage_client.get_bucket(os.getenv("SINK"))
 
     csv_name = "data-import-teams.csv"
     bucket.blob(csv_name).upload_from_string(df.to_csv(header=0, index=0), "text/csv")
@@ -78,10 +67,8 @@ def write_data(df: DataFrame, df_match: DataFrame) -> None:
 
 
 def main() -> None:
-    clean_dir(str(path))
-
     USERNAME = footy_username  # Your username
-    PASSWORD = footy_key  # Your password
+    PASSWORD = os.getenv("FOOTY_KEY")  # Your password
 
     driver = webdriver.Chrome(chrome_options=set_chrome_options())
     driver.get('https://footystats.org/login')
@@ -95,7 +82,7 @@ def main() -> None:
     search_box.send_keys(PASSWORD)
 
     driver.find_element_by_id("register_submit").click()
-    
+
     time.sleep(5)  # Let the user actually see something!
 
     # germany teams

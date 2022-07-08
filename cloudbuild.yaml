@@ -1,0 +1,23 @@
+steps:
+  # Build the container image
+  - name: "gcr.io/cloud-builders/docker"
+    args: [ "build", "-t", "gcr.io/$PROJECT_ID/stats-import2:latest", "." ]
+  # Push the container image to Container Registry
+  - name: "gcr.io/cloud-builders/docker"
+    args: [ "push", "eu.gcr.io/$PROJECT_ID/stats-import2:latest" ]
+  # Deploy container image to Cloud Run
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    entrypoint: gcloud
+    args:
+      - "run"
+      - "deploy"
+      - "stats-import2"
+      - "--image=gcr.io/$PROJECT_ID/stats-import2:latest"
+      - "--region=europe-west3"
+      - "--cpu=2"
+      - "--port=8080"
+      - "--memory=2048Mi"
+      - "--timeout=600"
+      - "--concurrency=20"
+      - "--platform=managed"
+      - "--max-instances=100"
