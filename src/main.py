@@ -105,7 +105,6 @@ def main() -> None:
     driver.get('https://footystats.org/c-dl.php?type=teams&comp=6019')
 
     time.sleep(5)
-
     driver.close()
     driver.quit()
     print('Success!')
