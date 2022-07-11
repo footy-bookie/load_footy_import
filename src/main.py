@@ -65,6 +65,8 @@ def write_data(df: DataFrame, df_match: DataFrame) -> None:
     bucket.blob(csv_name_match).upload_from_string(df_match.to_csv(header=0, index=0), "text/csv")
     print("Successfully imported, cleaned and exported match stats to {}".format(str(bucket)))
 
+    return None
+
 
 def main() -> None:
     USERNAME = footy_username  # Your username
