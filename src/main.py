@@ -88,23 +88,23 @@ def main() -> None:
     time.sleep(5)  # Let the user actually see something!
 
     # germany teams
-    driver.get('https://footystats.org/c-dl.php?type=teams&comp=6192')
+    driver.get('https://footystats.org/c-dl.php?type=teams&comp=7664')
     time.sleep(3)
     driver.get_screenshot_as_file("screenshot.png")
     # germany matches
-    driver.get('https://footystats.org/c-dl.php?type=matches&comp=6192')
+    driver.get('https://footystats.org/c-dl.php?type=matches&comp=7664')
     # england teams
     time.sleep(3)
-    driver.get('https://footystats.org/c-dl.php?type=teams&comp=6135')
+    driver.get('https://footystats.org/c-dl.php?type=teams&comp=7704')
     # spain teams
     time.sleep(3)
-    driver.get('https://footystats.org/c-dl.php?type=teams&comp=6211')
+    driver.get('https://footystats.org/c-dl.php?type=teams&comp=7665')
     # italy teams
     time.sleep(3)
-    driver.get('https://footystats.org/c-dl.php?type=teams&comp=6198')
+    driver.get('https://footystats.org/c-dl.php?type=teams&comp=7608')
     # france teams
     time.sleep(3)
-    driver.get('https://footystats.org/c-dl.php?type=teams&comp=6019')
+    driver.get('https://footystats.org/c-dl.php?type=teams&comp=7500')
 
     time.sleep(5)
     driver.close()
