@@ -19,6 +19,8 @@ RUN curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-ke
     apt-get -yqq install google-chrome-stable && \
     rm -rf /var/lib/apt/lists/*
 
+ENV FOOTY_USERNAME=nichohelmut FOOTY_KEY_NAME=footy_key SINK=dev-footy_stats_sink_dev PROJECT_NUMBER=127076287616
+
 RUN pip install -r requirements.txt
 
 CMD [ "python", "main.py"]

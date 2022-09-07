@@ -118,4 +118,3 @@ if __name__ == "__main__":
     main()
     df, df_match = read_storage(str(path))
     write_data(df, df_match)
-
