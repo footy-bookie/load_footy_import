@@ -11,7 +11,7 @@ steps:
     args:
       - "run"
       - "deploy"
-      - "stats-import2"
+      - "stats-importer"
       - "--image=gcr.io/$PROJECT_ID/stats-importer:latest"
       - "--region=europe-west3"
       - "--cpu=2"
