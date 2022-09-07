@@ -112,6 +112,7 @@ def main() -> None:
     print('Success!')
 
     return None
+#//TODO: READ ABPUT RETURN EXIT CODE 0
 
 
 if __name__ == "__main__":

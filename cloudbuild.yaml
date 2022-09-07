@@ -15,7 +15,6 @@ steps:
       - "--image=gcr.io/$PROJECT_ID/stats-importer:latest"
       - "--region=europe-west3"
       - "--cpu=2"
-      - "--port=8080"
       - "--memory=2048Mi"
       - "--timeout=600"
       - "--concurrency=20"
