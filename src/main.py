@@ -1,5 +1,4 @@
 import os
-import sys
 import time
 from pathlib import Path
 
@@ -57,7 +56,7 @@ def read_storage(path: str) -> tuple:
     return df, df_match
 
 
-def write_data(df: DataFrame, df_match: DataFrame) -> None:
+def write_data(df: DataFrame, df_match: DataFrame) -> str:
     storage_client = storage.Client()
 
     bucket = storage_client.get_bucket(os.getenv("SINK"))
@@ -69,11 +68,10 @@ def write_data(df: DataFrame, df_match: DataFrame) -> None:
     bucket.blob(csv_name_match).upload_from_string(df_match.to_csv(header=0, index=0), "text/csv")
     print("Successfully imported, cleaned and exported match stats to {}".format(str(bucket)))
 
-    return None
+    return "OK2"
 
 
-@app.route("/")
-def main() -> None:
+def files_from_website() -> str:
     USERNAME = footy_username  # Your username
     PASSWORD = os.getenv("FOOTY_KEY")  # Your password
 
@@ -115,11 +113,15 @@ def main() -> None:
     driver.close()
     driver.quit()
     print('Success!')
-    sys.exit()
+    return "Ok"
+
+
+@app.route("/")
+def main():
+    files_from_website()
+    df, df_match = read_storage(str(path))
+    write_data(df, df_match)
 
 
 if __name__ == "__main__":
-    main()
-    df, df_match = read_storage(str(path))
-    write_data(df, df_match)
     app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))

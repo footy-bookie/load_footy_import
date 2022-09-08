@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.9-slim
 
 WORKDIR src
 COPY /src /src
@@ -23,6 +23,4 @@ ENV FOOTY_USERNAME=nichohelmut FOOTY_KEY_NAME=footy_key SINK=dev-footy_stats_sin
 
 RUN pip install -r requirements.txt
 
-EXPOSE 8080
-
-CMD [ "python", "main.py","--host", "0.0.0.0", "--port", "8080"]
+CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 --timeout 0 main:app
