@@ -1,12 +1,16 @@
 import os
+import sys
 import time
 from pathlib import Path
 
 import pandas as pd
+from flask import Flask
 from google.cloud import storage
 from pandas import DataFrame
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+
+app = Flask(__name__)
 
 footy_username = os.getenv("FOOTY_USERNAME")
 
@@ -68,6 +72,7 @@ def write_data(df: DataFrame, df_match: DataFrame) -> None:
     return None
 
 
+@app.route("/")
 def main() -> None:
     USERNAME = footy_username  # Your username
     PASSWORD = os.getenv("FOOTY_KEY")  # Your password
@@ -110,12 +115,11 @@ def main() -> None:
     driver.close()
     driver.quit()
     print('Success!')
-
-    return None
-#//TODO: READ ABPUT RETURN EXIT CODE 0
+    sys.exit()
 
 
 if __name__ == "__main__":
     main()
     df, df_match = read_storage(str(path))
     write_data(df, df_match)
+    app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
