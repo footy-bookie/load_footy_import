@@ -23,4 +23,6 @@ ENV FOOTY_USERNAME=nichohelmut FOOTY_KEY_NAME=footy_key SINK=dev-footy_stats_sin
 
 RUN pip install -r requirements.txt
 
-CMD [ "python", "main.py"]
+EXPOSE 8080
+
+CMD [ "python", "main.py","--host", "0.0.0.0", "--port", "8080"]
