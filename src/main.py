@@ -113,7 +113,7 @@ def files_from_website() -> str:
     driver.close()
     driver.quit()
     print('Success!')
-    return "Ok"
+    return "OK"
 
 
 @app.route("/")
@@ -121,6 +121,8 @@ def main():
     files_from_website()
     df, df_match = read_storage(str(path))
     write_data(df, df_match)
+
+    return "OK"
 
 
 if __name__ == "__main__":
